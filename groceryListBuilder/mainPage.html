@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery List Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Grocery List Builder</h1>
+    </header>
+    <main>
+        <div class="container">
+           
+            <div class="list-section">
+                <div class="controls">
+                    <button id="select-list-btn">Select List</button>
+                    <button id="select-store-btn">Select Store</button>
+                </div>
+                <h2>Your Grocery List</h2>
+                <input
+                    type="text"
+                    id="add-grocery-item"
+                    placeholder="Add a grocery item..."
+                />
+                <button id="add-grocery-btn">Add</button>
+                <ul id="grocery-list"></ul>
+                <button id="generate-route-btn">Generate Route</button>
+            </div>
+
+            
+            <div class="list-section">
+                <h2>Suggested Products</h2>
+                <ul id="suggested-products"></ul>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
