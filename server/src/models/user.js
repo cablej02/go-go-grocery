@@ -1,4 +1,4 @@
-import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 
 export class User extends Model {
@@ -15,10 +15,6 @@ export function UserFactory(sequelize){
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-      },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
