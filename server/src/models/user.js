@@ -2,7 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 
 export class User extends Model {
-    static async setPassword(password) {
+    async setPassword(password) {
         const saltRounds = 10;
         this.password = await bcrypt.hash(password, saltRounds);
     }
@@ -28,6 +28,7 @@ export function UserFactory(sequelize){
     {
       tableName: 'users',
       sequelize,
+      timestamps: true,
       hooks: {
         // Before creating a new user, hash and set the password
         beforeCreate: async (user) => {

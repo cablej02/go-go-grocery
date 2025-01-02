@@ -1,7 +1,5 @@
-//import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-// Middleware function to authenticate JWT token
 export const authenticateToken = (req, res, next) => {
   // Get the authorization header from the request
   const authHeader = req.headers.authorization;
@@ -17,7 +15,8 @@ export const authenticateToken = (req, res, next) => {
     // Verify the JWT token
     jwt.verify(token, secretKey, (err, user) => {
       if (err) {
-        return res.sendStatus(403); // Send forbidden status if the token is invalid
+        // Send forbidden status if the token is invalid
+        return res.sendStatus(403); 
       }
 
       // Attach the user information to the request object

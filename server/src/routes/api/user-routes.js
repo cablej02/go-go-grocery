@@ -21,7 +21,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Get /users/:email - Get a user by email
-router.get('/:email', async (req, res) => {
+router.get('/email/:email', async (req, res) => {
   const { email } = req.params;
   try {
     const user = await User.findOne({
@@ -40,9 +40,9 @@ router.get('/:email', async (req, res) => {
 
 // POST /users - Create a new user
 router.post('/', async (req, res) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const newUser = await User.create({ username, email, password });
+    const newUser = await User.create({ email, password });
     res.status(201).json(newUser);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -52,12 +52,11 @@ router.post('/', async (req, res) => {
 // PUT /users/:id - Update a user by id
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { email, username, password } = req.body;
+  const { email, password } = req.body;
   try {
     const user = await User.findByPk(id);
     if (user) {
       if(email) user.email = email;
-      if(username) user.username = username;
       if(password) user.password = password;
       await user.save();
       res.json(user);
