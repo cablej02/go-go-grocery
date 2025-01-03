@@ -68,6 +68,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+//TODO: Delete this? not sure if it's needed
 // DELETE /users/:id - Delete a user by id
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
