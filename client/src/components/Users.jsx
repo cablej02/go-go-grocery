@@ -1,21 +1,17 @@
 import React from 'react';
 
-const UserList = ({ users }) => {
+const UserList = ({ user }) => {
     return (
         <>
             <h2 className="pb-5">
-                Check out all your friends!
+                Show the first user
             </h2>
-            {users && users.map((user) => (
-                <div className="row align-center mb-5" key={user.id}>
-                    <div className="col-md-6">
-                        <h3>{user.id}. {user.username}</h3>
-                    </div>
-                    <div className="col-md-6">
-                        <h4><a href={`mailto:${user.email}`}>{user.email}</a></h4>
-                    </div>
+            <div className="card">
+                <div className="card-body">
+                    <h5 className="card-title">{user.id}</h5>
+                    <h5 className="card-title">{user.email}</h5>
                 </div>
-            ))}
+            </div>
         </>
     );
 };

@@ -1,18 +1,18 @@
 import { useState, useEffect, useLayoutEffect } from "react";
-import { retrieveUser, retrieveUserByEmail, createUser, updateUser } from "../api/userAPI";
+import { retrieveUser, retrieveUserByEmail, updateUser } from "../api/userAPI";
 import Error from "./Error";
 import UserList from '../components/Users';
 import auth from '../utils/auth';
 
 const Home = () => {
 
-    const [users, setUsers] = useState([]);
+    const [user, setUser] = useState([]);
     const [error, setError] = useState(false);
     const [loginCheck, setLoginCheck] = useState(false);
 
     useEffect(() => {
         if (loginCheck) {
-            fetchUsers();
+            fetchUser(1);
         }
     }, [loginCheck]);
 
@@ -29,7 +29,7 @@ const Home = () => {
     const fetchUser = async (id) => {
         try {
             const data = await retrieveUser(id);
-            setUsers(data)
+            setUser(data)
         } catch (err) {
             console.error('Failed to retrieve tickets:', err);
             setError(true);
@@ -46,7 +46,8 @@ const Home = () => {
                 !loginCheck ? (
                     <div className='login-notice'></div>
                 ) : (
-                    <UserList users={users} />
+                    
+                    <UserList user={user} />
                 )}
         </>
     );

@@ -44,31 +44,6 @@ const retrieveUserByEmail = async (email) => {
     }
 }
 
-const createUser = async (userInfo) => {
-    try {
-        const response = await fetch(`/api/users`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${Auth.getToken()}`
-        },
-        body: JSON.stringify(userInfo)
-        });
-    
-        const data = await response.json();
-    
-        if(!response.ok) {
-            throw new Error('Invalid user API response, check network tab!');
-        }
-    
-        return data;
-    
-    } catch (err) { 
-        console.log('Error from data retrieval:', err);
-        return [];
-    }
-}
-
 const updateUser = async (id, userInfo) => {
     try {
         const response = await fetch(`/api/users/${id}`, {
@@ -94,4 +69,4 @@ const updateUser = async (id, userInfo) => {
     }
 }
 
-export { retrieveUser, retrieveUserByEmail, createUser, updateUser };
+export { retrieveUser, retrieveUserByEmail, updateUser };

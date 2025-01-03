@@ -1,4 +1,4 @@
-export const login = async (userInfo) => {
+const login = async (userInfo) => {
   try {
     // Send a POST request to '/auth/login'
     const response = await fetch('/auth/login', {
@@ -24,3 +24,30 @@ export const login = async (userInfo) => {
     return Promise.reject('Could not fetch user info');
   }
 }
+
+const createUser = async (userInfo) => {
+    try {
+        const response = await fetch(`/auth/register`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${Auth.getToken()}`
+        },
+        body: JSON.stringify(userInfo)
+        });
+    
+        const data = await response.json();
+    
+        if(!response.ok) {
+            throw new Error('Invalid user API response, check network tab!');
+        }
+    
+        return data;
+    
+    } catch (err) { 
+        console.log('Error from data retrieval:', err);
+        return [];
+    }
+}
+
+export { login, createUser };
