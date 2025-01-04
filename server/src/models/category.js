@@ -1,5 +1,9 @@
 import { DataTypes, Model } from 'sequelize';
 
+export class Category extends Model {
+  // Do nothing
+}
+
 export function CategoryFactory(sequelize){
   Category.init(
     {
