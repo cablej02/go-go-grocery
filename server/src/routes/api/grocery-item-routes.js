@@ -1,4 +1,4 @@
-import express from express;
+import express from 'express';
 import { GroceryItem } from '../../models/index.js';
 
 const router = express.Router();
@@ -30,5 +30,19 @@ router.get('/', async (req, res) => {
 
     }
 })
+
+router.post('/', async (req, res) => {
+    const {id, name, CategoryId} = req.body
+    try {
+        const item = await GroceryItem.create({
+            id, name, CategoryId
+        });
+        res.status(201).json(item)
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
+})
+
+// TODO: PUT, DELETE Routes
 
 export { router as groceryItemRouter }

@@ -9,6 +9,9 @@ const seedAll = async () => {
     await seedCategories();
     console.log('\n----- CATEGORIES SEEDED -----\n');
 
+    //TODO: await grocery-item
+    //TODO: await grocery-list
+
     process.exit(0);
   }
   catch(err){
