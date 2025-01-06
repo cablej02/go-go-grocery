@@ -45,8 +45,8 @@ router.put('/:id', async (req, res) => {
   try {
     const user = await User.findByPk(id);
     if (user) {
-      if(email) user.email = email;
-      if(password) user.password = password;
+      user.email = email;
+      user.password = password;
       await user.save();
       res.json(user);
     } else {
@@ -54,6 +54,41 @@ router.put('/:id', async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+});
+
+// PATCH /users/:id - Update a user by id
+router.patch('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { email, password } = req.body;
+  try {
+    const user = await User.findByPk(id);
+    if (user) {
+      user.email = email || user.email;
+      user.password = password || user.password;
+      await user.save();
+      res.json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// DELETE /users/:id - Delete a user by id
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findByPk(id);
+    if (user) {
+      await user.destroy();
+      res.json({ message: 'User deleted' });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
