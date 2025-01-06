@@ -1,6 +1,6 @@
 import { GroceryItem } from '../models/index.js';
 
-export const seedCategories = async () => {
+export const seedGroceryItems = async () => {
     await GroceryItem.bulkCreate([
         { name: 'Apple', CategoryId: 1 },
         { name: 'Banana', CategoryId: 1 },

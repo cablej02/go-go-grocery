@@ -21,6 +21,7 @@ export function GroceryItemFactory(sequelize) {
             },
         },
         {
+            tableName: 'grocery_items',
             sequelize,
             timestamps: true,
         }
