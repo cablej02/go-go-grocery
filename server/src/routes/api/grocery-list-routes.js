@@ -13,13 +13,9 @@ router.get('/', async (req, res) => {
 
     try {
         const lists = await GroceryList.findAll({ where: { owner_id }})
-        if (lists.length > 0) {
-            res.json(lists)
-        } else {
-            res.status(404).json({message: 'Lists not found'});
-        }
+        res.json(lists)
     } catch (error) {
-            res.status(500).json({message: error.message});
+        res.status(500).json({message: error.message});
     }
 });
 

@@ -5,29 +5,54 @@ import { User } from '../../models/index.js';
 
 const router = express.Router();
 
-// GET /shared-lists - Get all shared lists for a specific user
-router.get('/:user_id', async (req, res) => {
-    const { user_id } = req.params;
+// GET /shared-lists - Get all shared lists for a specific user using query params
+router.get('/', async (req, res) => {
+    const { user_id } = req.query;
+
+    if (!user_id || isNaN(Number(user_id))) {
+        return res.status(400).json({ message: 'A valid numeric user_id query parameter is required.' });
+    }
+    
     try {
         const sharedLists = await SharedList.findAll({
             where: { user_id },
             include: {
                 model: GroceryList,
-                as: 'list',
             },
         });
 
         if (sharedLists.length > 0) {
             // return the list_id, name, shared list id
             res.json(sharedLists.map((sharedList) => {
+                const data = sharedList.dataValues;
                 return {
-                    id: sharedList.id,
-                    list_id: sharedList.list.id,
-                    name: sharedList.list.name,
+                    id: data.id,
+                    list_id: data.GroceryList.id,
+                    name: data.GroceryList.name,
                 };
             }));
         } else {
             res.status(404).json({ message: 'Shared lists not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// GET /shared-lists/:id - Get a specific shared list by id
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const sharedList = await SharedList.findByPk(id, {
+            include: {
+                model: GroceryList,
+            },
+        });
+
+        if (sharedList) {
+            res.json(sharedList);
+        } else {
+            res.status(404).json({ message: 'Shared List not found' });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });

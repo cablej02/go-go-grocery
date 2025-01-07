@@ -1,25 +1,47 @@
 import express from 'express';
 import { GroceryListItem } from '../../models/index.js';
+import { Product } from '../../models/index.js';
 
 const router = express.Router();
 
 //GET - Get all grocery list items for a specific list and the products associated with them
-router.get('/:list_id', async (req, res) => {
-    const { list_id } = req.params;
+router.get('/', async (req, res) => {
+    const { list_id } = req.query;
+
+    if (!list_id || isNaN(Number(list_id))) {
+        return res.status(400).json({ message: 'A valid numeric list_id query parameter is required.' });
+    }
 
     try {
         const groceryListItems = await GroceryListItem.findAll({
             where: { list_id },
             include: {
                 model: Product,
+            },
+        });
+
+        res.json(groceryListItems);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+//GET - Get a specific grocery list item by id
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const groceryListItem = await GroceryListItem.findByPk(id, {
+            include: {
+                model: Product,
                 as: 'product',
             },
         });
 
-        if (groceryListItems.length > 0) {
-            res.json(groceryListItems);
+        if (groceryListItem) {
+            res.json(groceryListItem);
         } else {
-            res.status(404).json({ message: 'No Grocery List Items found' });
+            res.status(404).json({ message: 'Grocery List Item not found' });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });

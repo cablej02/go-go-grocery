@@ -20,16 +20,22 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Get /users/:email - Get a user by email
-router.get('/email/:email', async (req, res) => {
-  const { email } = req.params;
-  try {
-    const user = await User.findOne({
-        where: { email },
-        attributes: { exclude: ['password'] }
+// Get /users - Get a user by email using query params
+router.get('/', async (req, res) => {
+    const { email } = req.query;
+
+    if (!email) {
+        return res.status(400).json({ message: 'An email query parameter is required.' });
+    }
+
+    try {
+        const user = await User.findOne({
+            where: { email },
+            attributes: { exclude: ['password'] }
         });
-    if (user) {
-        res.json(user);
+        
+        if (user) {
+            res.json(user);
         } else {
             res.status(404).json({ message: 'User not found' });
         }
