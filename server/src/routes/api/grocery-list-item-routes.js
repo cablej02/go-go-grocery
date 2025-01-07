@@ -1,5 +1,5 @@
 import express from 'express';
-import { GroceryListItem } from '../../db/models/index.js';
+import { GroceryListItem } from '../../models/index.js';
 
 const router = express.Router();
 

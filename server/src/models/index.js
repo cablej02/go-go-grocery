@@ -59,4 +59,4 @@ GroceryListItem.belongsTo(Product, {
     foreignKey: 'product_id',
 });
 
-export { sequelize, User, Category, Product, GroceryList, SharedList };
+export { sequelize, User, Category, Product, GroceryList, SharedList, GroceryListItem };
