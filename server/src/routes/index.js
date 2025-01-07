@@ -5,9 +5,8 @@ import { authRouter } from './auth-routes.js';
 
 const router = Router();
 
-// TODO: Uncomment
-// router.use('/api', authenticateToken, apiRoutes);
-router.use('/api', apiRoutes);
+router.use('/api', authenticateToken, apiRoutes);
+router.use('/devapi', apiRoutes); // TODO: DELETE THIS LINE
 router.use('/auth', authRouter);
 
 export default router;

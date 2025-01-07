@@ -3,14 +3,17 @@ import { GroceryList } from '../../models/index.js'
 
 const router = express.Router();
 
-router.get('/for/:owner_id', async (req, res) => {
-    const { owner_id } = req.params;
+//GET /lists for a specific user using query params
+router.get('/', async (req, res) => {
+    const { owner_id } = req.query;
+
+    if (!owner_id || isNaN(Number(owner_id))) {
+        return res.status(400).json({ message: 'A valid numeric owner_id query parameter is required.' });
+    }
+
     try {
-        const lists = await GroceryList.findAll({
-            where: {
-                owner_id: owner_id,
-            }})
-        if (lists) {
+        const lists = await GroceryList.findAll({ where: { owner_id }})
+        if (lists.length > 0) {
             res.json(lists)
         } else {
             res.status(404).json({message: 'Lists not found'});
@@ -18,7 +21,6 @@ router.get('/for/:owner_id', async (req, res) => {
     } catch (error) {
             res.status(500).json({message: error.message});
     }
-    
 });
 
 router.get('/:id', async (req, res) => {
