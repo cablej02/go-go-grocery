@@ -1,31 +1,31 @@
 import express from 'express';
-import { GroceryItem } from '../../models/index.js';
+import { Product } from '../../models/index.js';
 
 const router = express.Router();
 
-// GET /grocery-items/:id - Get a grocery item by id
+// GET /products/:id - Get a product by id
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const item = await GroceryItem.findByPk(id);
+        const item = await Product.findByPk(id);
         if (item) {
             res.json(item)
         } else {
-            res.status(404).json({message: 'Item not found'});
+            res.status(404).json({message: 'Product not found'});
         }
     } catch (error) {
         res.status(500).json({message: error.message});
     }
 });
 
-// GET /grocery-items - Get all grocery items
+// GET /products - Get all products
 router.get('/', async (req, res) => {
     try {
-        const items = await GroceryItem.findAll();
+        const items = await Product.findAll();
         if (items){
             res.json(items)
         } else {
-            res.status(404).json({message: 'Items not found'});
+            res.status(404).json({message: 'Products not found'});
         }
     } catch (error) {
         res.status(500).json({message: error.message});
@@ -33,12 +33,12 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST /grocery-items - Create a new grocery item
+// POST /products - Create a new product
 router.post('/', async (req, res) => {
-    const {id, name, CategoryId} = req.body
+    const {id, name, category_id} = req.body
     try {
-        const item = await GroceryItem.create({
-            id, name, CategoryId
+        const item = await Product.create({
+            id, name, category_id
         });
         res.status(201).json(item)
     } catch (error) {
@@ -46,58 +46,58 @@ router.post('/', async (req, res) => {
     }
 });
 
-// PUT /grocery-items/:id - Update a grocery item by id
+// PUT /products/:id - Update a product by id
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { name, CategoryId } = req.body;
+  const { name, category_id } = req.body;
   try {
-      const item = await GroceryItem.findByPk(id);
+      const item = await Product.findByPk(id);
       if (item) {
           item.name = name;
-          item.CategoryId = CategoryId;
+          item.category_id = category_id;
           await item.save();
           res.json(item);
       } else {
-          res.status(404).json({message: 'Item not found'});
+          res.status(404).json({message: 'Product not found'});
       }
   } catch (error) {
       res.status(500).json({message: error.message});
   }
 });
 
-// PATCH /grocery-items/:id - Update a grocery item by id
+// PATCH /products/:id - Update a product by id
 router.patch('/:id', async (req, res) => {
     const { id } = req.params;
-    const { name, CategoryId } = req.body;
+    const { name, category_id } = req.body;
     try {
-        const item = await GroceryItem.findByPk(id);
+        const item = await Product.findByPk(id);
         if (item) {
             if (name) item.name = name;
-            if (CategoryId) item.CategoryId = CategoryId;
+            if (category_id) item.category_id = category_id;
             await item.save();
             res.json(item);
         } else {
-            res.status(404).json({message: 'Item not found'});
+            res.status(404).json({message: 'Product not found'});
         }
     } catch (error) {
         res.status(500).json({message: error.message});
     }
 });
 
-// DELETE /grocery-items/:id - Delete a grocery item by id
+// DELETE /products/:id - Delete a product by id
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const item = await GroceryItem.findByPk(id);
+        const item = await Product.findByPk(id);
         if (item) {
             await item.destroy();
-            res.json({message: 'Item deleted'});
+            res.json({message: 'Product deleted'});
         } else {
-            res.status(404).json({message: 'Item not found'});
+            res.status(404).json({message: 'Product not found'});
         }
     } catch (error) {
         res.status(500).json({message: error.message});
     }
 });
 
-export { router as groceryItemRouter }
+export { router as productRouter }

@@ -1,6 +1,6 @@
 import sequelize from '../config/connection.js';
 import { seedCategories } from './category-seeds.js';
-import { seedGroceryItems } from './grocery-item-seeds.js';
+import { seedProducts } from './product-seeds.js';
 import { seedUsers } from './user-seeds.js';
 
 const seedAll = async () => {
@@ -14,8 +14,8 @@ const seedAll = async () => {
     await seedCategories();
     console.log('\n----- CATEGORIES SEEDED -----\n');
 
-    await seedGroceryItems();
-    console.log('\n----- GROCERY ITEMS SEEDED -----\n');
+    await seedProducts();
+    console.log('\n----- PRODUCTS SEEDED -----\n');
 
     //TODO: await grocery-list
 

@@ -1,14 +1,9 @@
 import { DataTypes, Model, } from 'sequelize';
 
-export class GroceryItem extends Model{
+export class Product extends Model{};
 
-
-
-};
-
-export function GroceryItemFactory(sequelize) {
-
-    GroceryItem.init(
+export function ProductFactory(sequelize) {
+    Product.init(
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -21,10 +16,10 @@ export function GroceryItemFactory(sequelize) {
             },
         },
         {
-            tableName: 'grocery_items',
+            tableName: 'products',
             sequelize,
             timestamps: true,
         }
     )
-    return GroceryItem;
+    return Product;
 };
