@@ -1,7 +1,12 @@
 import { User } from '../models/index.js';
-
+const users = [
+    { email: 'test@test.com', password: 'password' },
+]
 export const seedUsers = async () => {
-    await User.bulkCreate([
-        { email: 'test@test.com', password: 'password' },
-    ])
+    for(let user of users) {
+        const tempUser = User.build(user);
+        await tempUser.setPassword(user.password);
+        user.password = tempUser.password;
+    }
+    await User.bulkCreate(users);
 }
