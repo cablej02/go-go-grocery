@@ -12,11 +12,11 @@ export function SharedListFactory(sequelize) {
                 autoIncrement: true,
                 primaryKey: true,
             },
-            userId: {
+            user_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            listId: {
+            list_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
@@ -25,10 +25,10 @@ export function SharedListFactory(sequelize) {
             tableName: 'shared_lists',
             sequelize,
             timestamps: true,
-            indexes: [ // composite unique index to force unique pairs of userId and listId
+            indexes: [ // composite unique index to force unique pairs of user_id and list_id
                 {
                     unique: true,
-                    fields: ['userId', 'listId'],
+                    fields: ['user_id', 'list_id'],
                 }
             ]
         }
