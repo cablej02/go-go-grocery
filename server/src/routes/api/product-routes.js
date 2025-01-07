@@ -7,9 +7,9 @@ const router = express.Router();
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const item = await Product.findByPk(id);
-        if (item) {
-            res.json(item)
+        const product = await Product.findByPk(id);
+        if (product) {
+            res.json(product)
         } else {
             res.status(404).json({message: 'Product not found'});
         }
@@ -21,9 +21,9 @@ router.get('/:id', async (req, res) => {
 // GET /products - Get all products
 router.get('/', async (req, res) => {
     try {
-        const items = await Product.findAll();
-        if (items){
-            res.json(items)
+        const products = await Product.findAll();
+        if (products){
+            res.json(products)
         } else {
             res.status(404).json({message: 'Products not found'});
         }
@@ -37,10 +37,10 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const {id, name, category_id} = req.body
     try {
-        const item = await Product.create({
+        const product = await Product.create({
             id, name, category_id
         });
-        res.status(201).json(item)
+        res.status(201).json(product)
     } catch (error) {
         res.status(400).json({message: error.message})
     }
@@ -51,12 +51,12 @@ router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { name, category_id } = req.body;
   try {
-      const item = await Product.findByPk(id);
-      if (item) {
-          item.name = name;
-          item.category_id = category_id;
-          await item.save();
-          res.json(item);
+      const product = await Product.findByPk(id);
+      if (product) {
+          product.name = name;
+          product.category_id = category_id;
+          await product.save();
+          res.json(product);
       } else {
           res.status(404).json({message: 'Product not found'});
       }
@@ -70,12 +70,12 @@ router.patch('/:id', async (req, res) => {
     const { id } = req.params;
     const { name, category_id } = req.body;
     try {
-        const item = await Product.findByPk(id);
-        if (item) {
-            if (name) item.name = name;
-            if (category_id) item.category_id = category_id;
-            await item.save();
-            res.json(item);
+        const product = await Product.findByPk(id);
+        if (product) {
+            if (name) product.name = name;
+            if (category_id) product.category_id = category_id;
+            await product.save();
+            res.json(product);
         } else {
             res.status(404).json({message: 'Product not found'});
         }
@@ -88,9 +88,9 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const item = await Product.findByPk(id);
-        if (item) {
-            await item.destroy();
+        const product = await Product.findByPk(id);
+        if (product) {
+            await product.destroy();
             res.json({message: 'Product deleted'});
         } else {
             res.status(404).json({message: 'Product not found'});

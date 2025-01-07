@@ -15,6 +15,7 @@ export function CategoryFactory(sequelize){
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
     },
     {
