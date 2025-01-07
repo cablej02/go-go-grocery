@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
         const groceryList = await GroceryList.create({
             id, name, owner_id
         });
-        res.status(201).json(product)
+        res.status(201).json(groceryList)
     } catch (error) {
         res.status(400).json({message: error.message})
     }
