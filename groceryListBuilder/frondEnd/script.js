@@ -82,17 +82,15 @@ function displaySuggestedItems(inputValue) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const suggestedList = document.getElementById("suggested-products");
     const groceryList = document.getElementById("grocery-list");
-
-    const addGroceryBtn = document.getElementById("add-grocery-btn");
     const input = document.getElementById("add-grocery-item");
+    const addGroceryBtn = document.getElementById("add-grocery-btn");
 
     addGroceryBtn.addEventListener("click", () => {
         const product = input.value.trim();
         if (product) {
             addProductToList(product);
-            input.value = "";
+            input.value = ""; 
         }
     });
 
@@ -101,9 +99,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const product = input.value.trim();
             if (product) {
                 addProductToList(product);
-                input.value = "";
+                input.value = ""; 
             }
         }
+    });
+
+    input.addEventListener("input", () => {
+        displaySuggestedItems(input.value);
     });
 
     function addProductToList(product) {
@@ -112,14 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         listItem.addEventListener("click", () => {
             groceryList.removeChild(listItem);
-            updateSuggestedList(); 
         });
 
         groceryList.appendChild(listItem);
-        updateSuggestedList();
     }
-
-    input.addEventListener("input", () => {
-        displaySuggestedItems(input.value);
-    });
 });

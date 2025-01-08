@@ -1,7 +1,9 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import Login from "../components/Login.jsx";
+import GroceryList from "../components/GroceryList.jsx"
 import Error from "./Error";
 import auth from '../utils/auth';
+
 
 const Home = () => {
     const [error, setError] = useState(false);
@@ -37,8 +39,8 @@ const Home = () => {
                 !loggedIn ? (
                     <Login />
                 ) : (
-                    
-                    <p>logged in</p>
+                    // load in grovery list
+                    <GroceryList />
                 )}
         </>
     );
