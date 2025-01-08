@@ -4,7 +4,7 @@ import { Product } from '../../models/index.js';
 
 const router = express.Router();
 
-//GET - Get all grocery list items for a specific list and the products associated with them
+//GET /api/list-items?list_id=1 - Get all grocery list items for a specific list and the products associated with them
 router.get('/', async (req, res) => {
     const { list_id } = req.query;
 
@@ -34,7 +34,6 @@ router.get('/:id', async (req, res) => {
         const groceryListItem = await GroceryListItem.findByPk(id, {
             include: {
                 model: Product,
-                as: 'product',
             },
         });
 
