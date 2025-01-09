@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { retrieveGroceryListItems } from "../api/groceryListAPI.jsx";
+import { retrieveAllProducts } from "../api/productsAPI.jsx";
 
 const GroceryList = ({ lists }) => {
     const [selectedList, setSelectedList] = useState(null);
     const [listItems, setListItems] = useState([]);
+    const [availableProducts, setAvailableProducts] = useState([]);
+
+    let products = null;
+
+    useEffect (()=> {
+        fetchAllProducts ()
+    },[])
+     
 
     const handleChange = (e) => {
         setSelectedList(e.target.value);
@@ -19,8 +28,15 @@ const GroceryList = ({ lists }) => {
             console.error(error);
         }
     }
+    const fetchAllProducts = async () => {
+        try {
+            products = await retrieveAllProducts();
+            console.log (products)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
-    console.log(lists)
     return (
         <div className="grocery-list pt-5">
             <select 

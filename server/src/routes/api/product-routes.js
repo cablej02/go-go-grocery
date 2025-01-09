@@ -1,5 +1,6 @@
 import express from 'express';
 import { Product } from '../../models/index.js';
+import { Category } from '../../models/index.js';
 
 const router = express.Router();
 
@@ -21,9 +22,18 @@ router.get('/:id', async (req, res) => {
 // GET /products - Get all products
 router.get('/', async (req, res) => {
     try {
-        const products = await Product.findAll();
-        if (products){
-            res.json(products)
+        const products = await Product.findAll(
+            {include: {model:Category}}
+        );
+        if (products.length>0){
+            res.json(products.map(product => {
+                return {
+                    id: product.id, 
+                    name: product.name,
+                    category_id: product.category_id,
+                    categoryName: product.Category.name,
+                }
+            }))
         } else {
             res.status(404).json({message: 'Products not found'});
         }
