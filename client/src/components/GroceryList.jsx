@@ -1,8 +1,8 @@
-const GroceryList = ({lists}) => {
-    console.log (lists)
+const GroceryList = ({ lists }) => {
+    console.log(lists)
     return (
         <>
-        <p> on this thing</p>
+            <p> on this thing</p>
         </>
     )
 }

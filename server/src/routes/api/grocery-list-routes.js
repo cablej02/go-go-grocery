@@ -3,7 +3,7 @@ import { GroceryList } from '../../models/index.js'
 
 const router = express.Router();
 
-//GET /lists for a specific user using query params
+//GET /lists for the user from the token
 router.get('/', async (req, res) => {
     const owner_id = req.user.id;
 
