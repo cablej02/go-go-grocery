@@ -35,10 +35,10 @@ router.get('/', async (req, res) => {
 
 // POST /products - Create a new product
 router.post('/', async (req, res) => {
-    const {id, name, category_id} = req.body
+    const {name, category_id} = req.body
     try {
         const product = await Product.create({
-            id, name, category_id
+            name, category_id
         });
         res.status(201).json(product)
     } catch (error) {
@@ -50,6 +50,11 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { name, category_id } = req.body;
+
+  if (!name || !category_id) {
+      return res.status(400).json({message: 'Name and category_id are required'});
+  }
+
   try {
       const product = await Product.findByPk(id);
       if (product) {
