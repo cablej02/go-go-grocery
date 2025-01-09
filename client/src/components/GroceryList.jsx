@@ -7,7 +7,7 @@ const GroceryList = ({ lists }) => {
     const [listItems, setListItems] = useState([]);
     const [availableProducts, setAvailableProducts] = useState([]);
 
-    let products = null;
+    let products = [];
 
     useEffect (()=> {
         fetchAllProducts ()
@@ -17,13 +17,22 @@ const GroceryList = ({ lists }) => {
     const handleChange = (e) => {
         setSelectedList(e.target.value);
         fetchListItems(e.target.value);
+        calcAvailableProducts();
     }
-
+    const calcAvailableProducts =() => {
+        const availableProducts = [...products];
+        for (let i = 0;i<listItems.length; i++){
+            const index = availableProducts.findIndex(() => {
+                return availableProducts.id === listItems[i].product_id
+            })
+            availableProducts.splice(index, 1);
+        }
+        setAvailableProducts(availableProducts);
+    }
     const fetchListItems = async (listId) => {
         try {
             const data = await retrieveGroceryListItems(listId);
             setListItems(data);
-            console.log(listItems);
         } catch (error) {
             console.error(error);
         }
@@ -31,7 +40,6 @@ const GroceryList = ({ lists }) => {
     const fetchAllProducts = async () => {
         try {
             products = await retrieveAllProducts();
-            console.log (products)
         } catch (error) {
             console.error(error);
         }
@@ -40,9 +48,9 @@ const GroceryList = ({ lists }) => {
     return (
         <div className="grocery-list pt-5">
             <select 
-            id="list-select"
-            value={selectedList || ""}
-            onChange={handleChange}
+                id="list-select"
+                value={selectedList || ""}
+                onChange={handleChange}
             >
                 <option value="" disabled>
                     Select a List
@@ -58,6 +66,18 @@ const GroceryList = ({ lists }) => {
                     <li key={index}>{item.name}</li>
                 ))}
             </ul>
+            <select
+                id= "product-select"
+                >
+                <option value="" disabled>
+                    Select a Product
+                </option>
+                {availableProducts.map((product, index) => (
+                    <option key={index} value={product.id}>
+                        {product.name}
+                    </option>
+                ))}
+            </select>
         </div>
         
     )
