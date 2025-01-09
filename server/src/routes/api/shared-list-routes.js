@@ -7,7 +7,7 @@ const router = express.Router();
 
 // GET /shared-lists - Get all shared lists for a specific user using query params
 router.get('/', async (req, res) => {
-    const { user_id } = req.query;
+    const user_id = req.user;
 
     if (!user_id || isNaN(Number(user_id))) {
         return res.status(400).json({ message: 'A valid numeric user_id query parameter is required.' });
@@ -76,6 +76,11 @@ router.post('/', async (req, res) => {
             return res.status(404).json({ message: 'List not found' });
         }
 
+        // Check that the user is not the owner of the list
+        if (list.owner_id === user.id) {
+            return res.status(400).json({ message: 'Cannot share list with owner' });
+        }
+
         const sharedList = await SharedList.create({
             user_id: user.id,
             list_id,
@@ -89,7 +94,7 @@ router.post('/', async (req, res) => {
 // DELETE /shared-lists:id
 router.delete('/:id', async (req, res) => {
     const { id } = req.params;
-    const { user_id } = req.user.id; // get the user id from the request object, added by the authenticateToken middleware
+    const user_id = req.user.id;
 
     try {
         const sharedList = await SharedList.findByPk(id);

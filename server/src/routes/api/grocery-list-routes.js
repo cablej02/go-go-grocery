@@ -5,7 +5,7 @@ const router = express.Router();
 
 //GET /lists for a specific user using query params
 router.get('/', async (req, res) => {
-    const { owner_id } = req.query;
+    const owner_id = req.user.id;
 
     if (!owner_id || isNaN(Number(owner_id))) {
         return res.status(400).json({ message: 'A valid numeric owner_id query parameter is required.' });
