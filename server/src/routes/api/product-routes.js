@@ -51,7 +51,8 @@ router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { name, category_id } = req.body;
 
-  if (!name || !category_id) {
+  // validate the request and confirm category_id is a number
+  if (!name || !category_id || isNaN(Number(category_id))) {
       return res.status(400).json({message: 'Name and category_id are required'});
   }
 
