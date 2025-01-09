@@ -1,10 +1,23 @@
 import React, { useState } from "react";
+import { retrieveGroceryListItems } from "../api/groceryListAPI.jsx";
 
 const GroceryList = ({ lists }) => {
     const [selectedList, setSelectedList] = useState(null);
+    const [listItems, setListItems] = useState([]);
 
     const handleChange = (e) => {
         setSelectedList(e.target.value);
+        fetchListItems(e.target.value);
+    }
+
+    const fetchListItems = async (listId) => {
+        try {
+            const data = await retrieveGroceryListItems(listId);
+            setListItems(data);
+            console.log(listItems);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     console.log(lists)
@@ -24,6 +37,11 @@ const GroceryList = ({ lists }) => {
                     </option>
                 ))}
             </select>
+            <ul>
+                {listItems.map((item, index) => (
+                    <li key={index}>{item.name}</li>
+                ))}
+            </ul>
         </div>
         
     )

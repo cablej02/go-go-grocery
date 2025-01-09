@@ -10,7 +10,7 @@ function App() {
     <div>
       <Header />
       <main className='container pt-5'>
-        <Outlet  />
+        <Outlet />
       </main>
       <Footer />
     </div>

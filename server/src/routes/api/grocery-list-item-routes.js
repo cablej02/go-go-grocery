@@ -20,7 +20,14 @@ router.get('/', async (req, res) => {
             },
         });
 
-        res.json(groceryListItems);
+        res.json(groceryListItems.map((item) => {
+            return {
+                id: item.id,
+                product_id: item.product_id,
+                quantity: item.quantity,
+                name: item.Product.name,
+            };
+        }));
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
