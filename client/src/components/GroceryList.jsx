@@ -15,11 +15,17 @@ const GroceryList = ({ lists }) => {
     },[])
 
     useEffect (() => {
-        // recalc available products when listItems or products change
-        if(products.length) {
-            calcAvailableProducts()
+        // if a list is selected, calc available products
+        if(selectedList) {
+            if(products.length) {
+                calcAvailableProducts()
+            }
+        }else{
+            // if no list is selected, reset list items and available products
+            setListItems([]);
+            setAvailableProducts([]);
         }
-    },[listItems, products])
+    },[listItems, products, selectedList])
 
     const handleChange = (e) => {
         const selectedListId = e.target.value;
