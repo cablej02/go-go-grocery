@@ -1,34 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { retrieveGroceryListItems } from "../api/groceryListAPI.jsx";
 import { retrieveAllProducts } from "../api/productsAPI.jsx";
+import { use } from "react";
 
 const GroceryList = ({ lists }) => {
     const [selectedList, setSelectedList] = useState(null);
     const [listItems, setListItems] = useState([]);
     const [availableProducts, setAvailableProducts] = useState([]);
+    const [products, setProducts] = useState([]);
 
-    let products = [];
-
-    useEffect (()=> {
+    useEffect (() => {
+        // fetch all prodcuts on mount
         fetchAllProducts ()
     },[])
-     
+
+    useEffect (() => {
+        // recalc available products when listItems or products change
+        if(products.length) {
+            calcAvailableProducts()
+        }
+    },[listItems, products])
 
     const handleChange = (e) => {
-        setSelectedList(e.target.value);
-        fetchListItems(e.target.value);
-        calcAvailableProducts();
+        const selectedListId = e.target.value;
+        setSelectedList(selectedListId);
+        fetchListItems(selectedListId);
     }
+
     const calcAvailableProducts =() => {
-        const availableProducts = [...products];
-        for (let i = 0;i<listItems.length; i++){
-            const index = availableProducts.findIndex(() => {
-                return availableProducts.id === listItems[i].product_id
-            })
-            availableProducts.splice(index, 1);
-        }
-        setAvailableProducts(availableProducts);
+        const remainingProducts = products.filter(
+            // filter out products that are already in the list
+            (product) => !listItems.some((item) => item.product_id === product.id)
+        );
+        setAvailableProducts(remainingProducts);
     }
+
     const fetchListItems = async (listId) => {
         try {
             const data = await retrieveGroceryListItems(listId);
@@ -37,9 +43,11 @@ const GroceryList = ({ lists }) => {
             console.error(error);
         }
     }
+
     const fetchAllProducts = async () => {
         try {
-            products = await retrieveAllProducts();
+            const data = await retrieveAllProducts();
+            setProducts(data);
         } catch (error) {
             console.error(error);
         }
@@ -55,29 +63,27 @@ const GroceryList = ({ lists }) => {
                 <option value="" disabled>
                     Select a List
                 </option>
-                {lists.map((list, index) => (
-                    <option key={index} value={list.id}>
+                {lists.map((list) => (
+                    <option key={list.id} value={list.id}>
                         {list.name}
                     </option>
                 ))}
             </select>
+            <h2>Grocery List Items</h2>
             <ul>
-                {listItems.map((item, index) => (
-                    <li key={index}>{item.name}</li>
+                {listItems.map((item) => (
+                    <li key={item.id} value={item.id}>{item.name}</li>
                 ))}
             </ul>
-            <select
-                id= "product-select"
-                >
-                <option value="" disabled>
-                    Select a Product
-                </option>
-                {availableProducts.map((product, index) => (
-                    <option key={index} value={product.id}>
+
+            <h2>Available Products</h2>
+            <ul>
+                {availableProducts.map((product) => (
+                    <li key={product.id} value={product.id}>
                         {product.name}
-                    </option>
+                    </li>
                 ))}
-            </select>
+            </ul>
         </div>
         
     )
