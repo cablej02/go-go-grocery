@@ -3,6 +3,7 @@ import { retrieveGroceryListItems } from "../api/groceryListAPI.jsx";
 import { retrieveAllProducts } from "../api/productsAPI.jsx";
 import GroceryListSelector from "./GroceryListSelector.jsx";
 import GroceryItems from "./GroceryItems.jsx";
+import AvailableProducts from "./AvailableProducts.jsx";
 
 const GroceryList = ({ lists }) => {
     const [selectedList, setSelectedList] = useState(null);
@@ -78,13 +79,9 @@ const GroceryList = ({ lists }) => {
             </div>
 
             {/* Available Products */}
-            <ul>
-                {availableProducts.map((product) => (
-                    <li key={product.id} value={product.id}>
-                        {product.name}
-                    </li>
-                ))}
-            </ul>
+            <div className="available-products flex-grow-1">
+                <AvailableProducts products={availableProducts} />
+            </div>
         </div>
     )
 }
