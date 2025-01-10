@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { retrieveGroceryListItems } from "../api/groceryListAPI.jsx";
 import { retrieveAllProducts } from "../api/productsAPI.jsx";
-import { use } from "react";
+import GroceryListSelector from "./GroceryListSelector.jsx";
 
 const GroceryList = ({ lists }) => {
     const [selectedList, setSelectedList] = useState(null);
@@ -16,7 +16,7 @@ const GroceryList = ({ lists }) => {
 
     useEffect (() => {
         // if a list is selected, calc available products
-        if(selectedList) {
+        if(selectedList || selectedList === "") {
             if(products.length) {
                 calcAvailableProducts()
             }
@@ -60,21 +60,15 @@ const GroceryList = ({ lists }) => {
     }
 
     return (
-        <div className="grocery-list pt-5">
-            <select 
-                id="list-select"
-                value={selectedList || ""}
-                onChange={handleChange}
-            >
-                <option value="" disabled>
-                    Select a List
-                </option>
-                {lists.map((list) => (
-                    <option key={list.id} value={list.id}>
-                        {list.name}
-                    </option>
-                ))}
-            </select>
+        <div className="grocery-list-container d-flex pt-5">
+            <div className="list-selector">
+                <GroceryListSelector
+                    lists={lists}
+                    selectedList={selectedList}
+                    onChangeList={handleChange}
+                />
+            </div>
+            
             <h2>Grocery List Items</h2>
             <ul>
                 {listItems.map((item) => (
@@ -91,7 +85,6 @@ const GroceryList = ({ lists }) => {
                 ))}
             </ul>
         </div>
-        
     )
 }
 export default GroceryList;
