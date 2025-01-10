@@ -65,7 +65,12 @@ router.post('/', async (req, res) => {
             quantity,
         });
 
-        res.status(201).json(groceryListItem);
+        res.status(201).json({
+            id: groceryListItem.id,
+            list_id: groceryListItem.list_id,
+            product_id: groceryListItem.product_id,
+            quantity: groceryListItem.quantity,
+        });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
