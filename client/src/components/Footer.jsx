@@ -10,7 +10,7 @@ const Footer = () => {
     ];
 
     return (
-        <footer className="footer bg-dark py-3">
+        <footer className="footer container-fluid py-1">
             <div>
                 {developers.map((dev, index) => (
                     <span key={index} className="mx-2">

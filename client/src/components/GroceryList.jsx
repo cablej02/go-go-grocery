@@ -62,7 +62,7 @@ const GroceryList = ({ lists }) => {
     }
 
     return (
-        <div className="grocery-list-container d-flex pt-5">
+        <div className="d-flex mt-5 gap-5">
             
             {/* Grocery List Selector - Dropdown */}
             <div className="list-selector">
