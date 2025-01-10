@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { retrieveGroceryListItems } from "../api/groceryListAPI.jsx";
 import { retrieveAllProducts } from "../api/productsAPI.jsx";
 import GroceryListSelector from "./GroceryListSelector.jsx";
+import GroceryItems from "./GroceryItems.jsx";
 
 const GroceryList = ({ lists }) => {
     const [selectedList, setSelectedList] = useState(null);
@@ -61,6 +62,8 @@ const GroceryList = ({ lists }) => {
 
     return (
         <div className="grocery-list-container d-flex pt-5">
+            
+            {/* Grocery List Selector - Dropdown */}
             <div className="list-selector">
                 <GroceryListSelector
                     lists={lists}
@@ -69,14 +72,12 @@ const GroceryList = ({ lists }) => {
                 />
             </div>
             
-            <h2>Grocery List Items</h2>
-            <ul>
-                {listItems.map((item) => (
-                    <li key={item.id} value={item.id}>{item.name}</li>
-                ))}
-            </ul>
+            {/* Grocery List Items */}
+            <div className="grocery-items flex-grow-1">
+                <GroceryItems items={listItems} />
+            </div>
 
-            <h2>Available Products</h2>
+            {/* Available Products */}
             <ul>
                 {availableProducts.map((product) => (
                     <li key={product.id} value={product.id}>
