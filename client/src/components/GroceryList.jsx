@@ -17,15 +17,15 @@ const GroceryList = ({ lists }) => {
     },[])
 
     useEffect (() => {
-        // if a list is selected, calc available products
-        if(selectedList || selectedList === "") {
-            if(products.length) {
-                calcAvailableProducts()
+        // if no list is selected, reset list items and available products
+        if(!selectedList || selectedList === "") {
+            if(listItems.length || availableProducts.length) {
+                setListItems([]);
+                setAvailableProducts([]);
             }
-        }else{
-            // if no list is selected, reset list items and available products
-            setListItems([]);
-            setAvailableProducts([]);
+        }else if (products.length) {
+            // if a list is selected, calc available products
+            calcAvailableProducts()
         }
     },[listItems, products, selectedList])
 
