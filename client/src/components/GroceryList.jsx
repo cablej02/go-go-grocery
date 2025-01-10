@@ -16,6 +16,10 @@ const GroceryList = ({ lists }) => {
         fetchAllProducts ()
     },[])
 
+    useEffect(() => {
+        console.log("Selected List:", selectedList);
+    }, [selectedList]);
+
     useEffect (() => {
         // if no list is selected, reset list items and available products
         if(!selectedList || selectedList === "") {
@@ -80,7 +84,12 @@ const GroceryList = ({ lists }) => {
 
             {/* Available Products */}
             <div className="available-products flex-grow-1">
-                <AvailableProducts products={availableProducts} />
+                <AvailableProducts
+                    products={availableProducts}
+                    selectedList={selectedList}
+                    listItems={listItems}
+                    setListItems={setListItems}
+                />
             </div>
         </div>
     )
