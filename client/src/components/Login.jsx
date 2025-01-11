@@ -45,14 +45,14 @@ const Login = () => {
 
   return (
     <>
-    <body>
+    <div style={{justifyContent: "center"}}>
       
-    <div className='card' style={{background:"gray", padding: "20px", width: "30rem", margin: "25px"}}>
+    <div className='card-container card bg-secondary m-5 p-5' style={{width: "100%"}}>
       <form className='form login-form' onSubmit={handleSubmit}>
         <h1>Login</h1>
         {/* Username input field */}
         <div className="form-group">
-          <label>Email</label>
+          <label className="m-2">Email</label>
           <input 
             className="form-input"
             type='text'
@@ -63,7 +63,7 @@ const Login = () => {
         </div>
         {/* Password input field */}
         <div className="form-group">
-          <label>Password</label>
+          <label className="m-2">Password</label>
           <input 
             className="form-input"
             type='password'
@@ -80,7 +80,7 @@ const Login = () => {
       </form>
     </div>
 
-    </body>
+    </div>
     </>
   )
 };
