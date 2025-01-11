@@ -1,8 +1,82 @@
+import { Op, col, fn, literal } from 'sequelize';
 import express from 'express';
 import { Product } from '../../models/index.js';
 import { Category } from '../../models/index.js';
+import { GroceryListItem } from '../../models/index.js';
 
 const router = express.Router();
+
+// GET /products/suggested - Get suggested products
+router.get('/suggested', async (req, res) => {
+    const { excludedProductIds = [], limit = 5 } = req.query;
+
+    // parse the query parameters
+    if(typeof excludedProductIds === 'string') {
+        try{
+            excludedProductIds = JSON.parse(excludedProductIds);
+        } catch (error) {
+            return res.status(400).json({ message: 'excludedProductIds must be a valid JSON array' });
+        }
+    }
+
+    // validate the query parameters
+    if(!Array.isArray(excludedProductIds) || excludedProductIds.some(id => isNaN(Number(id)))) {
+        return res.status(400).json({ message: 'excludedProductIds must be an array of numbers' });
+    }
+
+    if(isNaN(Number(limit))) {
+        return res.status(400).json({ message: 'limit must be a number' });
+    }
+
+    // limit the number of suggested items to 10 and ensure it is greater than 0
+    if(limit < 1) {
+        return res.status(400).json({ message: 'limit must be greater than 0' });
+    } else if (limit > 10) {
+        limit = 10;
+    }
+
+    try {
+        const suggestedItems = await GroceryListItem.findAll({
+            logging: console.log,
+            attributes: [
+                'product_id',
+                [fn('COUNT', col('product_id')), 'product_count'],
+            ],
+            include: [
+                {
+                    model: Product,
+                    attributes: ['name', 'category_id'], // exclude all product attributes except those in the parent attributes array
+                    include: [
+                        {
+                            model: Category,
+                            attributes: ['name'],
+                        },
+                    ],
+                },
+            ],
+            where: {
+                createdAt: {
+                    [Op.gte]: literal("CURRENT_DATE - INTERVAL '30 DAYS'"),
+                },
+                product_id: {
+                    [Op.notIn]: excludedProductIds,
+                },
+            },
+            group: ['product_id', 'Product.id', 'Product.name', 'Product.Category.id', 'Product.category_id','Product.Category.name'],
+            order: [[fn('COUNT', col('product_id')), 'DESC']],
+            limit: Number(limit),
+        });
+
+        res.json(suggestedItems.map(item => ({
+            product_id: item.product_id,
+            name: item.Product.name,
+            category_id: item.Product.category_id,
+            categoryName: item.Product.Category.name,
+        })));
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
 // GET /products/:id - Get a product by id
 router.get('/:id', async (req, res) => {
