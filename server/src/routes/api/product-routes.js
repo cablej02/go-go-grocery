@@ -8,13 +8,14 @@ const router = express.Router();
 
 // GET /products/suggested - Get suggested products
 router.get('/suggested', async (req, res) => {
-    const { excludedProductIds = [], limit = 5 } = req.query;
+    let { excludedProductIds = [], limit = 5 } = req.query;
 
-    // parse the query parameters
-    if(typeof excludedProductIds === 'string') {
-        try{
+    // Parse excludedProductIds if it's a string
+    if (typeof excludedProductIds === 'string') {
+        try {
             excludedProductIds = JSON.parse(excludedProductIds);
-        } catch (error) {
+        } catch (err) {
+            console.log(err);
             return res.status(400).json({ message: 'excludedProductIds must be a valid JSON array' });
         }
     }
@@ -37,7 +38,6 @@ router.get('/suggested', async (req, res) => {
 
     try {
         const suggestedItems = await GroceryListItem.findAll({
-            logging: console.log,
             attributes: [
                 'product_id',
                 [fn('COUNT', col('product_id')), 'product_count'],
