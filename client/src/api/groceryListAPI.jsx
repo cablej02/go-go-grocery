@@ -80,4 +80,24 @@ const createGroceryListItem = async (listId, productId, quantity) => {
     }
 }
 
-export { retrieveGroceryLists, retrieveGroceryListItems, createGroceryList, createGroceryListItem};
+const deleteGroceryListItem = async (listItemId) => {
+    try{
+        const response = await fetch(`/api/list-items/${listItemId}`,{
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Auth.getToken()}`
+            }
+        }) 
+        const data = await response.json();
+        if (!response.ok){
+            throw new Error(data.message || "Invalid api response, check network tab")
+        }
+        return data;
+    } catch (error){
+        console.log ("Error from data retrieval", error)
+        return null;
+    }
+}
+
+export { retrieveGroceryLists, retrieveGroceryListItems, createGroceryList, createGroceryListItem, deleteGroceryListItem};

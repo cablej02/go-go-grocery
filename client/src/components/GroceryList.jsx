@@ -4,7 +4,6 @@ import { retrieveAllProducts } from "../api/productsAPI.jsx";
 import GroceryListSelector from "./GroceryListSelector.jsx";
 import GroceryItems from "./GroceryItems.jsx";
 import AvailableProducts from "./AvailableProducts.jsx";
-import { use } from "react";
 
 const GroceryList = ({ lists }) => {
     const [selectedList, setSelectedList] = useState(null);
@@ -84,7 +83,9 @@ const GroceryList = ({ lists }) => {
             
             {/* Grocery List Items */}
             <div className="grocery-items flex-grow-1">
-                <GroceryItems items={listItems} />
+                <GroceryItems
+                    listItems={listItems}
+                    setListItems={setListItems} />
             </div>
 
             {/* Available Products */}

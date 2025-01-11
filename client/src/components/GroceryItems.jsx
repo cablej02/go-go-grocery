@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { deleteGroceryListItem } from '../api/groceryListAPI.jsx';
 
 const groupByCategory = (items) => {
     const groupedCategories = {};
@@ -15,14 +16,34 @@ const groupByCategory = (items) => {
     return groupedCategories;
 };
 
-const GroceryItems = ({ items }) => {
+const GroceryItems = ({ listItems, setListItems }) => {
     // groupedItems are organized by category
-    const [groupedItems, setGroupedItems] = useState(groupByCategory(items));
+    const [groupedItems, setGroupedItems] = useState(groupByCategory(listItems));
+
+    const handleRemoveListItem = async (event) => {
+        try {
+            // parse the event target value to an integer
+            const listItemId = parseInt(event.target.value);
+            console.log(`Removing item with id: ${listItemId}`);
+            const result = await deleteGroceryListItem(listItemId);
+            if (result) {
+                console.log("Item removed from list");
+
+                // Filter out the item that was removed
+                console.log(listItemId)
+                const updatedListItems = listItems.filter((item) => item.id !== listItemId);
+
+                // Update the list items
+                setListItems(updatedListItems);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     useEffect(() => {
-        console.log("Items:", items);
-        setGroupedItems(groupByCategory(items));
-    }, [items]);
+        setGroupedItems(groupByCategory(listItems));
+    }, [listItems]);
 
     return (
         <div>
@@ -34,7 +55,15 @@ const GroceryItems = ({ items }) => {
                     <ul className="list-group">
                         {catItems.map((item) => (
                             <li key={item.id} className="list-group-item">
-                                {item.name}
+                                <span>{item.name}</span>
+                                <span>{item.quantity}</span>
+                                <button
+                                    className="btn btn-danger"
+                                    value={item.id}
+                                    onClick={handleRemoveListItem}
+                                >
+                                    Remove
+                                </button>
                             </li>
                         ))}
                     </ul>
