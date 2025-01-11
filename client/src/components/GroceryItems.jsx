@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 const groupByCategory = (items) => {
     const groupedCategories = {};
     items.forEach((item) => {
-        console.log(item);
         const category = item.categoryName;
 
         // If the category doesn't exist in the object, create an empty array
@@ -21,6 +20,7 @@ const GroceryItems = ({ items }) => {
     const [groupedItems, setGroupedItems] = useState(groupByCategory(items));
 
     useEffect(() => {
+        console.log("Items:", items);
         setGroupedItems(groupByCategory(items));
     }, [items]);
 

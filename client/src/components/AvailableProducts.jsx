@@ -3,7 +3,6 @@ import { createGroceryListItem } from '../api/groceryListAPI.jsx';
 const AvailableProducts = ({ products, selectedList, listItems, setListItems }) => {
     const handleAddListItem = async (listId, productId) => {
         try {
-            console.log(listId, productId);
             const result = await createGroceryListItem(listId, productId, 1);
             if (result) {
                 console.log("Item added to list");

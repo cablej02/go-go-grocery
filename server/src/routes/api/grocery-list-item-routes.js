@@ -65,17 +65,37 @@ router.post('/', async (req, res) => {
     const { list_id, product_id, quantity } = req.body;
 
     try {
-        const groceryListItem = await GroceryListItem.create({
-            list_id,
-            product_id,
-            quantity,
-        });
+        // insert the new grocery list item
+        const createResult = await GroceryListItem.create(
+            {
+                list_id,
+                product_id,
+                quantity,
+            },
+        );
+
+        // get the new item with the product and category
+        const groceryListItem = await GroceryListItem.findByPk(createResult.id, 
+            {
+                include: {
+                    model: Product,
+                    attributes: ['name', 'category_id'],
+                    include: {
+                        model: Category,
+                        attributes: ['name'],
+                    },
+                }
+            }
+        );
 
         res.status(201).json({
             id: groceryListItem.id,
             list_id: groceryListItem.list_id,
             product_id: groceryListItem.product_id,
             quantity: groceryListItem.quantity,
+            name: groceryListItem.Product.name,
+            category_id: groceryListItem.Product.category_id,
+            categoryName: groceryListItem.Product.Category.name,
         });
     } catch (error) {
         res.status(400).json({ message: error.message });

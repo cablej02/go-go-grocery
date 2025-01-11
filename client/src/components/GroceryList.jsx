@@ -4,6 +4,7 @@ import { retrieveAllProducts } from "../api/productsAPI.jsx";
 import GroceryListSelector from "./GroceryListSelector.jsx";
 import GroceryItems from "./GroceryItems.jsx";
 import AvailableProducts from "./AvailableProducts.jsx";
+import { use } from "react";
 
 const GroceryList = ({ lists }) => {
     const [selectedList, setSelectedList] = useState(null);
@@ -20,6 +21,10 @@ const GroceryList = ({ lists }) => {
         console.log("Selected List:", selectedList);
     }, [selectedList]);
 
+    useEffect(() => {
+        console.log("List Items:", listItems);
+    }, [listItems]);
+
     useEffect (() => {
         // if no list is selected, reset list items and available products
         if(!selectedList || selectedList === "") {
@@ -33,7 +38,7 @@ const GroceryList = ({ lists }) => {
         }
     },[listItems, products, selectedList])
 
-    const handleChange = (e) => {
+    const handleSelectedListChange = (e) => {
         const selectedListId = e.target.value;
         setSelectedList(selectedListId);
         fetchListItems(selectedListId);
@@ -73,7 +78,7 @@ const GroceryList = ({ lists }) => {
                 <GroceryListSelector
                     lists={lists}
                     selectedList={selectedList}
-                    onChangeList={handleChange}
+                    onChangeList={handleSelectedListChange}
                 />
             </div>
             
