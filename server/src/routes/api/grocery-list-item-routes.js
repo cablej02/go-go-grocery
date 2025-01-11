@@ -1,6 +1,7 @@
 import express from 'express';
 import { GroceryListItem } from '../../models/index.js';
 import { Product } from '../../models/index.js';
+import { Category } from '../../models/index.js';
 
 const router = express.Router();
 
@@ -17,6 +18,9 @@ router.get('/', async (req, res) => {
             where: { list_id },
             include: {
                 model: Product,
+                include: {
+                    model: Category,
+                },
             },
         });
 
@@ -26,6 +30,8 @@ router.get('/', async (req, res) => {
                 product_id: item.product_id,
                 quantity: item.quantity,
                 name: item.Product.name,
+                category_id: item.Product.category_id,
+                categoryName: item.Product.Category.name,
             };
         }));
     } catch (error) {
