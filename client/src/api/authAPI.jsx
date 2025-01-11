@@ -31,7 +31,6 @@ const createUser = async (userInfo) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${Auth.getToken()}`
         },
         body: JSON.stringify(userInfo)
         });
@@ -46,7 +45,7 @@ const createUser = async (userInfo) => {
     
     } catch (err) { 
         console.log('Error from data retrieval:', err);
-        return [];
+        return null;
     }
 }
 
