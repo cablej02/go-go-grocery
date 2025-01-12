@@ -15,7 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Serves static files in the entire client's dist folder
-const clientDistPath = path.join(__dirname, '../client/dist');
+const clientDistPath = path.resolve(__dirname, '../client/dist');
 app.use(express.static(clientDistPath)); 
 
 app.use(express.json());
