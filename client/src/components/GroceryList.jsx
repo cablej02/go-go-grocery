@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { retrieveGroceryListItems } from "../api/groceryListAPI.jsx";
+import { retrieveGroceryListItems, createGroceryList } from "../api/groceryListAPI.jsx";
 import { retrieveAllProducts } from "../api/productsAPI.jsx";
 import GroceryListSelector from "./GroceryListSelector.jsx";
 import GroceryItems from "./GroceryItems.jsx";
 import AvailableProducts from "./AvailableProducts.jsx";
 
-const GroceryList = ({ lists }) => {
+const GroceryList = ({ lists, setLists }) => {
     const [selectedList, setSelectedList] = useState(null);
     const [listItems, setListItems] = useState([]);
     const [availableProducts, setAvailableProducts] = useState([]);
@@ -13,7 +13,7 @@ const GroceryList = ({ lists }) => {
 
     useEffect (() => {
         // fetch all prodcuts on mount
-        fetchAllProducts ()
+        fetchAllProducts()
     },[])
 
     useEffect(() => {
@@ -37,8 +37,7 @@ const GroceryList = ({ lists }) => {
         }
     },[listItems, products, selectedList])
 
-    const handleSelectedListChange = (e) => {
-        const selectedListId = e.target.value;
+    const handleSelectedListChange = (selectedListId) => {
         setSelectedList(selectedListId);
         fetchListItems(selectedListId);
     }
@@ -69,15 +68,35 @@ const GroceryList = ({ lists }) => {
         }
     }
 
+    const fetchAllCategories = async () => {
+        try {
+            const data = await retrieveAllCategories();
+            setCategories(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const onCreateList = async (listName) => {
+        try{
+            console.log("Creating list:", listName);
+            const data = await createGroceryList(listName);
+            setLists([...lists, data]);
+            handleSelectedListChange(data.id);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <div className="d-flex mt-5 gap-5">
-            
             {/* Grocery List Selector - Dropdown */}
             <div className="list-selector">
                 <GroceryListSelector
                     lists={lists}
                     selectedList={selectedList}
-                    onChangeList={handleSelectedListChange}
+                    onChangeList={(e) => handleSelectedListChange(e.target.value)}
+                    onCreateList={onCreateList}
                 />
             </div>
             

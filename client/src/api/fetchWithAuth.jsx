@@ -23,7 +23,6 @@ const fetchWithAuth = async (url, options = {}) => {
         return await response.json();
     } catch (error) {
         console.log("API Error", error);
-        navigate('/login');
     }
 }
 

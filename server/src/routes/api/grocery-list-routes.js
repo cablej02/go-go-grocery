@@ -13,7 +13,13 @@ router.get('/', async (req, res) => {
 
     try {
         const lists = await GroceryList.findAll({ where: { owner_id }})
-        res.json(lists)
+        res.json(lists.map(list => {
+            return {
+                id: list.id,
+                name: list.name,
+                owner_id: list.owner_id
+            }
+        }))
     } catch (error) {
         res.status(500).json({message: error.message});
     }
@@ -34,12 +40,19 @@ router.get('/:id', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const { id, name, owner_id } = req.body
+    const { name } = req.body
+    const owner_id = req.user.id;
+    
     try {
         const groceryList = await GroceryList.create({
-            id, name, owner_id
+            name, owner_id
         });
-        res.status(201).json(groceryList)
+        res.status(201).json(
+            {
+                id:groceryList.id,
+                name:groceryList.name,
+                owner_id:groceryList.owner_id
+            });
     } catch (error) {
         res.status(400).json({message: error.message})
     }

@@ -36,7 +36,7 @@ const Home = () => {
 
     return (
         <>
-            <GroceryList lists={lists}/>
+            <GroceryList lists={lists} setLists={setLists}/>
         </>
     );
 };
