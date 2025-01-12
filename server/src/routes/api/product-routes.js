@@ -121,10 +121,25 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     const {name, category_id} = req.body
     try {
-        const product = await Product.create({
+        const newProduct = await Product.create({
             name, category_id
         });
-        res.status(201).json(product)
+
+        const product = await Product.findByPk(newProduct.id, {
+            attributes: ['id', 'name', 'category_id'],
+            include: {
+                model: Category,
+                attributes: ['name'],
+            }
+        });
+        res.status(201).json(
+            {
+                id: product.id, 
+                name: product.name, 
+                category_id: product.category_id, 
+                categoryName: product.Category.name
+            }
+        );
     } catch (error) {
         res.status(400).json({message: error.message})
     }

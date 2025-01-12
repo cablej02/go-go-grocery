@@ -1,6 +1,6 @@
-import fetchWithAuth from './fetchWithAut';
+import fetchWithAuth from './fetchWithAuth';
 
-export const retrieveAllCategories = async () => {
+const retrieveAllCategories = async () => {
     return await fetchWithAuth('/api/categories');
 };
 

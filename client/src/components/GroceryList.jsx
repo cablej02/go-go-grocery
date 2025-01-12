@@ -20,10 +20,6 @@ const GroceryList = ({ lists, setLists }) => {
         console.log("Selected List:", selectedList);
     }, [selectedList]);
 
-    useEffect(() => {
-        console.log("List Items:", listItems);
-    }, [listItems]);
-
     useEffect (() => {
         // if no list is selected, reset list items and available products
         if(!selectedList || selectedList === "") {
@@ -68,15 +64,6 @@ const GroceryList = ({ lists, setLists }) => {
         }
     }
 
-    const fetchAllCategories = async () => {
-        try {
-            const data = await retrieveAllCategories();
-            setCategories(data);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
     const onCreateList = async (listName) => {
         try{
             console.log("Creating list:", listName);
@@ -113,6 +100,7 @@ const GroceryList = ({ lists, setLists }) => {
             <div className="available-products flex-grow-1">
                 <AvailableProducts
                     products={availableProducts}
+                    setProducts={setProducts}
                     selectedList={selectedList}
                     listItems={listItems}
                     setListItems={setListItems}
