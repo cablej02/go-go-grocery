@@ -25,7 +25,6 @@ const GroceryItems = ({ listItems, setListItems }) => {
 
     const handleChangeQuantity = async (listItemId, quantity) => {
         try {
-            console.log(listItemId, typeof listItemId, quantity, typeof quantity);
             const result = await updateGroceryListItemQuantity(listItemId, quantity);
             if (result) {
                 console.log("Item quantity updated");
@@ -46,32 +45,18 @@ const GroceryItems = ({ listItems, setListItems }) => {
         }
     }
 
-    const handleIncreaseQuantity = (event) => {
-        console.log(event.target)
+    const handleDecreaseQuantity = (listItemId, quantity) => {
         try{
-            const listItemId = parseInt(event.target.value);
-            const newQuantity = parseInt(event.target.quantity);
-            console.log(listItemId, typeof listItemId, newQuantity, typeof newQuantity);
-            handleChangeQuantity(listItemId, newQuantity);
-        } catch (error) {
-        console.error(error);
-      }
-    }
-
-    const handleDecreaseQuantity = (event) => {
-        try{
-            const listItemId = parseInt(event.target.value);
-            const newQuantity = parseInt(event.target.quantity) - 1;
+            const newQuantity = quantity - 1;
             if (newQuantity < 1 ) {
                 handleRemoveListItem(listItemId);
             }else {
                 handleChangeQuantity(listItemId, newQuantity);
             }
         } catch (error) {
-        console.error(error);
-      }
+            console.error(error);
+        }
     }
-    
     
     const handleRemoveListItem = async (listItemId) => {
         try {
@@ -107,14 +92,10 @@ const GroceryItems = ({ listItems, setListItems }) => {
                             <li key={item.id} className="list-group-item">
                                 <span>{item.name}</span>
                                 <button 
-                                    value={item.id}
-                                    quantity={item.quantity}
-                                    onClick={handleDecreaseQuantity}>-</button>
+                                    onClick={() => handleDecreaseQuantity(item.id, item.quantity)}>-</button>
                                 <span>{item.quantity}</span>
                                 <button 
-                                    value={item.id}
-                                    quantity={item.quantity} 
-                                    onClick={handleIncreaseQuantity}>+</button>
+                                    onClick={() => handleChangeQuantity(item.id, item.quantity + 1)}>+</button>
                                 <button
                                     className="btn btn-danger"
                                     value={item.id}
