@@ -13,7 +13,7 @@ const ListSelector = ({ lists, selectedList, onChangeList, onCreateList }) => {
     }
 
     return (
-        <div className="d-flex justify-content-center">
+        <div className="d-flex gap-1">
             <button className="btn btn-success" onClick={()=> setShowModal(true)}>+</button>
             <select
                 id="list-select"

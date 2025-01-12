@@ -90,21 +90,23 @@ const GroceryList = ({ lists, setLists }) => {
 
     return (
         <div className="d-flex mt-5 gap-5">
-            {/* Grocery List Selector - Dropdown */}
-            <div className="list-selector">
-                <GroceryListSelector
-                    lists={lists}
-                    selectedList={selectedList}
-                    onChangeList={(e) => handleSelectedListChange(e.target.value)}
-                    onCreateList={onCreateList}
-                />
-            </div>
-            
-            {/* Grocery List Items */}
-            <div className="grocery-items flex-grow-1">
-                <GroceryItems
-                    listItems={listItems}
-                    setListItems={setListItems} />
+            <div>
+                {/* Grocery List Selector - Dropdown */}
+                <div className="list-selector mx-3 mb-3">
+                    <GroceryListSelector
+                        lists={lists}
+                        selectedList={selectedList}
+                        onChangeList={(e) => handleSelectedListChange(e.target.value)}
+                        onCreateList={onCreateList}
+                    />
+                </div>
+                
+                {/* Grocery List Items */}
+                <div className="grocery-items flex-grow-1">
+                    <GroceryItems
+                        listItems={listItems}
+                        setListItems={setListItems} />
+                </div>
             </div>
 
             {/* Available Products */}

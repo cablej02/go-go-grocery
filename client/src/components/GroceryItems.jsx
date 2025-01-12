@@ -47,11 +47,10 @@ const GroceryItems = ({ listItems, setListItems }) => {
 
     return (
         <div>
-            <h3>Grocery List Items</h3>
             {/* Loop over all key:value pairs in groupedItems */}
             {Object.entries(groupedItems).map(([category, catItems]) => (
                 <div key={category}>
-                    <h4>{category}</h4>
+                    <h4 className="mt-3">{category}</h4>
                     <ul className="list-group">
                         {catItems.map((item) => (
                             <li key={item.id} className="list-group-item">
