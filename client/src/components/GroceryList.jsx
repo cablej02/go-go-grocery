@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { retrieveGroceryListItems } from "../api/groceryListAPI.jsx";
 import { retrieveAllProducts } from "../api/productsAPI.jsx";
 import GroceryListSelector from "./GroceryListSelector.jsx";

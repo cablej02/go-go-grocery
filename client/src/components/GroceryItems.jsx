@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { deleteGroceryListItem } from '../api/groceryListAPI.jsx';
 
 const groupByCategory = (items) => {

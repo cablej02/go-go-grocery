@@ -15,8 +15,8 @@ export const authenticateToken = (req, res, next) => {
     // Verify the JWT token
     jwt.verify(token, secretKey, (err, user) => {
       if (err) {
-        // Send forbidden status if the token is invalid
-        return res.sendStatus(403); 
+        // Send unauthorized status if the token is invalid or expired
+        return res.send(401).json({message: "Invalid or expired token"}); 
       }
 
       // Attach the user information to the request object
@@ -24,6 +24,6 @@ export const authenticateToken = (req, res, next) => {
       return next(); // Call the next middleware function
     });
   } else {
-    res.sendStatus(401); // Send unauthorized status if no authorization header is present
+    res.send(401).json({message: "Missing authorization header"}); // Send unauthorized status if no authorization header is present
   }
 };

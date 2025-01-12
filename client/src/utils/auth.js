@@ -21,7 +21,7 @@ class AuthService {
   // Remove the JWT token from localStorage and redirect to the home page
   logout() {
     localStorage.removeItem('id_token');
-    window.location.assign('/');
+    window.location.assign('/login');
   }
 }
 
