@@ -1,5 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from "react";
-import Login from "../components/Login.jsx";
+import { useState, useLayoutEffect } from "react";
 import GroceryList from "../components/GroceryList.jsx"
 import Error from "./Error";
 import auth from '../utils/auth';
@@ -7,7 +6,6 @@ import { retrieveGroceryLists } from "../api/groceryListAPI.jsx"
 
 const Home = () => {
     const [error, setError] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(false);
     const [lists, setLists] = useState([]);
 
     useLayoutEffect(() => {
@@ -15,16 +13,12 @@ const Home = () => {
     }, []);
 
     const checkLogin = () => {
-        if(auth.loggedIn()){
-            setLoggedIn(true);
+        if(!auth.loggedIn()){
+            window.location.assign('/login');
+        }else{
+            fetchGroceryLists();
         }
     };
-
-    useEffect(()=> {
-        if (loggedIn){
-            fetchGroceryLists(); 
-        }
-    }, [loggedIn]);
 
     const fetchGroceryLists = async () => {
         try {
@@ -42,13 +36,7 @@ const Home = () => {
 
     return (
         <>
-            {
-                !loggedIn ? (
-                    <Login />
-                ) : (
-                    <GroceryList lists={lists}/>
-                )
-            }
+            <GroceryList lists={lists}/>
         </>
     );
 };
