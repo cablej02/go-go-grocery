@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { deleteGroceryListItem } from '../api/groceryListAPI.jsx';
+import { deleteGroceryListItem, updateGroceryListItemQuantity } from '../api/groceryListAPI.jsx';
+
 
 const groupByCategory = (items) => {
     const groupedCategories = {};
@@ -19,11 +20,61 @@ const groupByCategory = (items) => {
 const GroceryItems = ({ listItems, setListItems }) => {
     // groupedItems are organized by category
     const [groupedItems, setGroupedItems] = useState(groupByCategory(listItems));
+    
+    // const [quantity, setQuantity] = useState({});
 
-    const handleRemoveListItem = async (event) => {
+    const handleChangeQuantity = async (listItemId, quantity) => {
         try {
-            // parse the event target value to an integer
+            console.log(listItemId, typeof listItemId, quantity, typeof quantity);
+            const result = await updateGroceryListItemQuantity(listItemId, quantity);
+            if (result) {
+                console.log("Item quantity updated");
+                // Update the list items
+                const updatedListItems = listItems.map((item) => {
+                    if (item.id === listItemId) {
+                        return { ...item, quantity };
+                    }
+                    return item;
+                });
+                setListItems(updatedListItems);
+            }
+        } catch (error) {
+            console.error(error);
+            if (error.response && error.response.status === 401) {
+                console.log("Unauthorized. Please log in.");
+            }
+        }
+    }
+
+    const handleIncreaseQuantity = (event) => {
+        console.log(event.target)
+        try{
             const listItemId = parseInt(event.target.value);
+            const newQuantity = parseInt(event.target.quantity);
+            console.log(listItemId, typeof listItemId, newQuantity, typeof newQuantity);
+            handleChangeQuantity(listItemId, newQuantity);
+        } catch (error) {
+        console.error(error);
+      }
+    }
+
+    const handleDecreaseQuantity = (event) => {
+        try{
+            const listItemId = parseInt(event.target.value);
+            const newQuantity = parseInt(event.target.quantity) - 1;
+            if (newQuantity < 1 ) {
+                handleRemoveListItem(listItemId);
+            }else {
+                handleChangeQuantity(listItemId, newQuantity);
+            }
+        } catch (error) {
+        console.error(error);
+      }
+    }
+    
+    
+    const handleRemoveListItem = async (listItemId) => {
+        try {
             console.log(`Removing item with id: ${listItemId}`);
             const result = await deleteGroceryListItem(listItemId);
             if (result) {
@@ -55,11 +106,19 @@ const GroceryItems = ({ listItems, setListItems }) => {
                         {catItems.map((item) => (
                             <li key={item.id} className="list-group-item">
                                 <span>{item.name}</span>
+                                <button 
+                                    value={item.id}
+                                    quantity={item.quantity}
+                                    onClick={handleDecreaseQuantity}>-</button>
                                 <span>{item.quantity}</span>
+                                <button 
+                                    value={item.id}
+                                    quantity={item.quantity} 
+                                    onClick={handleIncreaseQuantity}>+</button>
                                 <button
                                     className="btn btn-danger"
                                     value={item.id}
-                                    onClick={handleRemoveListItem}
+                                    onClick={(e) => handleRemoveListItem(parseInt(e.target.value))}
                                 >
                                     Remove
                                 </button>

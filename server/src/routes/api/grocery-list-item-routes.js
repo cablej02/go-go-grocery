@@ -107,6 +107,10 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { list_id, product_id, quantity } = req.body;
 
+    if (!list_id || !product_id || !quantity || isNaN(Number(list_id)) || isNaN(Number(product_id)) || isNaN(Number(quantity))) {
+        return res.status(400).json({ message: 'List_id, product_id, and quantity are required and must be numeric.' });
+    }
+
     try {
         const groceryListItem = await GroceryListItem.findByPk(id);
         if (groceryListItem) {
@@ -126,12 +130,32 @@ router.put('/:id', async (req, res) => {
 //PATCH - Update the quantity of a grocery list item
 router.patch('/:id', async (req, res) => {
     const { id } = req.params;
-    const { quantity } = req.body;
+    const { list_id, product_id, quantity } = req.body;
 
+    if (list_id) {
+        if (isNaN(Number(list_id))) {
+            return res.status(400).json({ message: 'List_id must be numeric.' });
+        }
+    }
+
+    if (product_id) {
+        if (isNaN(Number(product_id))) {
+            return res.status(400).json({ message: 'Product_id must be numeric.' });
+        }
+    }
+
+    if (quantity) {
+        if (isNaN(Number(quantity))) {
+            return res.status(400).json({ message: 'Quantity must be numeric.' });
+        }
+    }
     try {
-        const groceryListItem = await GroceryListItem.findByPk(id);
-        if (groceryListItem) {
-            groceryListItem.quantity = quantity;
+        //console.log(id, typeof id, list_id, typeof list_id, product_id, typeof product_id, quantity, typeof quantity);
+         const groceryListItem = await GroceryListItem.findByPk(id);
+         if (groceryListItem) {
+            if (list_id) groceryListItem.list_id = list_id;
+            if (product_id) groceryListItem.product_id = product_id;
+            if (quantity) groceryListItem.quantity = quantity;
             await groceryListItem.save();
             res.json(groceryListItem);
         } else {

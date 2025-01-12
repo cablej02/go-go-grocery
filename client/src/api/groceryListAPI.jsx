@@ -34,4 +34,13 @@ const deleteGroceryListItem = async (listItemId) => {
     );
 }
 
-export { retrieveGroceryLists, retrieveGroceryListItems, createGroceryList, createGroceryListItem, deleteGroceryListItem};
+const updateGroceryListItemQuantity = async (listItemId, quantity) => {
+    return await fetchWithAuth(`/api/list-items/${listItemId}`, 
+        {
+            method: "PATCH",
+            body: JSON.stringify({quantity})
+        }
+    );
+}
+
+export { retrieveGroceryLists, retrieveGroceryListItems, createGroceryList, createGroceryListItem, deleteGroceryListItem, updateGroceryListItemQuantity};
