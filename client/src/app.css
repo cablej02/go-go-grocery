@@ -56,3 +56,15 @@ html, body {
     fill: #5b8ff8;
     transform: scale(1.1);
 }
+
+/* Remove arrows in Chrome, Safari, Edge, and Opera */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove arrows in Firefox */
+input[type='number'] {
+    -moz-appearance: textfield;
+}
