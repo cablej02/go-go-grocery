@@ -62,6 +62,7 @@ const ProductSearch = ({ availableProducts, setAvailableProducts, selectedList, 
 
     return (
         <div className="d-flex flex-column justify-content-center mx-auto">
+            {selectedList && (
             <div className="d-flex justify-content-center mx-auto gap-2">
                 <div className="position-relative" style={{ width: '300px' }}>
                     {/* Search Input */}
@@ -102,6 +103,7 @@ const ProductSearch = ({ availableProducts, setAvailableProducts, selectedList, 
                     +
                 </button>
             </div>
+            )}
 
             {/* new product modal */}
             {showModal && (
