@@ -63,43 +63,61 @@ const GroceryItems = ({ listItems, setListItems }) => {
     }, [listItems]);
 
     return (
-        <div>
+        <div className="row">
             {/* Loop over all key:value pairs in groupedItems */}
             {Object.entries(groupedItems).map(([category, catItems]) => (
-                <div key={category} className="bg-dark rounded">
-                    <h4 className="mt-3">{category}</h4>
-                    <ul className="list-group">
-                        {catItems.map((item) => (
-                            <li key={item.id} className="list-group-item">
-                                <span>{item.name}</span>
-                                <div className="ms-auto d-flex align-items-center">
-                                    <button 
-                                        className="btn btn-danger fw-bold d-flex align-items-center justify-content-center"
-                                        style={{ height: '2em', width: '2em' }}
-                                        onClick={() => handleChangeQuantity(item.id, item.quantity - 1)}
-                                    >
-                                        -
-                                    </button>
-                                    <input
-                                        type="number"
-                                        className="form-control d-inline-block ms-2"
-                                        value={item.quantity}
-                                        min="1"
-                                        max="999"
-                                        onChange={(e) => handleChangeQuantity(item.id, parseInt(e.target.value) || 0)}
-                                        style={{ width: '50px' }}
-                                    />
-                                    <button
-                                        className="btn btn-success fw-bold d-flex align-items-center justify-content-center"
-                                        style={{ height: '2em', width: '2em' }}
-                                        onClick={() => handleChangeQuantity(item.id, item.quantity + 1)}
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+                <div key={category} className="col-4 mb-3">
+                    <div
+                        className="rounded p-1"
+                        style={{ backgroundColor: '#394353' }}
+                    >
+                        <h4
+                            className="p-1 text-light"
+                            style={
+                                {
+                                    // fontFamily:'cursive',
+                                    fontSize:'1.8em'
+                                }
+                            }
+                        >
+                            {category}
+                        </h4>
+                        <ul className="list-group">
+                            {catItems.map((item) => (
+                                <li key={item.id} className="list-group-item bg-secondary text-dark">
+                                    <span
+                                        style={{fontFamily:'cursive', fontSize:'1.4em'}}
+                                        className="fw-bold"
+                                    >{item.name}</span>
+                                    <div className="ms-auto d-flex align-items-center">
+                                        <button 
+                                            className="btn border-0 text-dark fw-bold d-flex align-items-center justify-content-center"
+                                            style={{ height: '2em', width: '2em' }}
+                                            onClick={() => handleChangeQuantity(item.id, item.quantity - 1)}
+                                        >
+                                            -
+                                        </button>
+                                        <input
+                                            type="number"
+                                            className="form-control text-center bg-light text-dark fw-bold d-inline-block ms-2"
+                                            value={item.quantity}
+                                            min="1"
+                                            max="999"
+                                            onChange={(e) => handleChangeQuantity(item.id, parseInt(e.target.value) || 0)}
+                                            style={{ width: '55px' }}
+                                        />
+                                        <button
+                                            className="btn border-0 text-dark fw-bold d-flex align-items-center justify-content-center"
+                                            style={{ height: '2em', width: '2em' }}
+                                            onClick={() => handleChangeQuantity(item.id, item.quantity + 1)}
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             ))}
         </div>

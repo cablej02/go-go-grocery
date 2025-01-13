@@ -88,9 +88,8 @@ const GroceryList = ({ lists, setLists }) => {
                     />
                 </div>
 
-                
                 {/* Product Search */}
-                <div className="available-products">
+                <div>
                     <ProductSearch
                         availableProducts={availableProducts}
                         setAvailableProducts={setProducts}
@@ -102,11 +101,12 @@ const GroceryList = ({ lists, setLists }) => {
             </div>
 
             {/* Grocery List Items */}
-            <div className="grocery-items flex-grow-1">
-                    <GroceryItems
-                        listItems={listItems}
-                        setListItems={setListItems} />
-                </div>
+            <div>
+                <GroceryItems
+                    listItems={listItems}
+                    setListItems={setListItems} 
+                />
+            </div>
         </div>
     )
 }

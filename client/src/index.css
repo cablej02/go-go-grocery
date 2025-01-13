@@ -1,9 +1,9 @@
 :root {
-    --bs-primary: rgb(227, 136, 0);
+    --bs-primary: #e38800;
     --bs-primary-rgb: 227, 136, 0;
   
-    --bs-secondary: rgb(108, 117, 125);
-    --bs-secondary-rgb: 108, 117, 125;
+    --bs-secondary: rgb(196, 196, 196);
+    --bs-secondary-rgb: 196, 196, 196;
   
     --bs-success: rgb(20, 109, 41);
     --bs-success-rgb: 20, 109, 41;
@@ -22,6 +22,8 @@
   
     --bs-dark: rgb(51, 57, 64);
     --bs-dark-rgb: 52, 58, 64;
+
+    --bs-test: #394353;
   
     /* Body Background and Text */
     --bs-body-bg: rgb(33, 37, 41);

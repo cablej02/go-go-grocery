@@ -20,9 +20,9 @@ const Header = () => {
         >
             <div className="container d-flex align-items-end justify-content-between">
                 <h1
-                    className='display-2 fw-normal text-light bg-dark border border-primary rounded-5 p-2'
+                    className='display-2 fw-normal text-light'
                     style={{
-                        textShadow:`-2px -2px var(--bs-primary), 2px -2px var(--bs-primary), -2px 2px var(--bs-primary), 1px 1px var(--bs-primary)`
+                        textShadow:`-2px -2px var(--bs-dark), 2px -2px var(--bs-dark), -2px 2px var(--bs-dark), 2px 2px var(--bs-dark)`
                     }}
                 >Go Go Grocery</h1>
                 <Navbar />
