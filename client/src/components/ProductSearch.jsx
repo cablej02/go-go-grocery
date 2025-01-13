@@ -20,9 +20,22 @@ const ProductSearch = ({ availableProducts, setAvailableProducts, selectedList, 
         setSearchInput(e.target.value.toLowerCase());
     }
 
-    const filteredProducts = availableProducts.filter((product) => {
-        return product.name.toLowerCase().includes(searchInput);
-    });
+    const getFilteredProducts = (products, searchInput, limit) => {
+        const result = [];
+        for (let i = 0; i < products.length; i++) {
+            if (products[i].name.toLowerCase().includes(searchInput)) {
+                result.push(products[i]);
+            }
+            if (result.length >= limit) {
+                break;
+            }
+        }
+        return result;
+    }
+    
+    const filteredProducts = searchInput ? 
+        getFilteredProducts(availableProducts, searchInput, 5) 
+        : [];
 
     const handleAddListItem = async (listId, productId) => {
         try {
@@ -77,7 +90,7 @@ const ProductSearch = ({ availableProducts, setAvailableProducts, selectedList, 
                     {/* Search Results Dropdown */}
                     {searchInput && (
                         <ul className="list-group position-absolute bg-light shadow rounded w-100">
-                            {filteredProducts.slice(0, 5).map((product) => (
+                            {filteredProducts.map((product) => (
                                 <li
                                     key={product.id}
                                     className="list-group-item d-flex justify-content-between align-items-center bg-light text-dark"
