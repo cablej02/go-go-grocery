@@ -19,18 +19,18 @@ const Navbar = () => {
   }, [loginCheck]);  // Dependency array ensures useEffect runs when loginCheck changes
 
   return (
-    <div className="display-flex justify-space-between align-center py-2 px-5 mint-green">
+    <div className="display-flex justify-space-between align-center py-2 px-5">
       <div>
         {
           // Conditional rendering based on loginCheck state
           !loginCheck ? (
             // Render login button if user is not logged in
-            <button className="btn" type='button'>
-              <Link to='/login'>Login</Link>
+            <button className="btn btn-dark text-primary border-primary" type='button'>
+              <Link className="text-primary" to='/login'>Login</Link>
             </button>
           ) : (
             // Render logout button if user is logged in
-            <button className="btn" type='button' onClick={() => {
+            <button className="btn btn-dark text-primary border-primary" type='button' onClick={() => {
               auth.logout();  // Call logout() method from auth utility on button click
             }}>Logout</button>
           )

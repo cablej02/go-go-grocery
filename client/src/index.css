@@ -1,6 +1,6 @@
 :root {
-    --bs-primary: rgb(0, 123, 255);
-    --bs-primary-rgb: 0, 123, 255;
+    --bs-primary: rgb(230, 146, 19);
+    --bs-primary-rgb: 230, 146, 19;
   
     --bs-secondary: rgb(108, 117, 125);
     --bs-secondary-rgb: 108, 117, 125;
@@ -17,8 +17,8 @@
     --bs-danger: rgb(220, 53, 69);
     --bs-danger-rgb: 220, 53, 69;
   
-    --bs-light: rgb(248, 249, 250);
-    --bs-light-rgb: 248, 249, 250;
+    --bs-light: rgb(232, 237, 241);
+    --bs-light-rgb: 232, 237, 241;
   
     --bs-dark: rgb(51, 57, 64);
     --bs-dark-rgb: 52, 58, 64;
@@ -31,7 +31,7 @@
     --bs-body-color-rgb: 173, 181, 189;
   
     /* Links */
-    --bs-link-color: rgb(13, 110, 253);
+    --bs-link-color: rgb(152, 178, 203);
     --bs-link-hover-color: rgb(10, 88, 202);
 }
 
