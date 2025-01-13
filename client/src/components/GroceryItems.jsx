@@ -72,25 +72,31 @@ const GroceryItems = ({ listItems, setListItems }) => {
                         {catItems.map((item) => (
                             <li key={item.id} className="list-group-item">
                                 <span>{item.name}</span>
-                                <button 
-                                    onClick={() => handleChangeQuantity(item.id, item.quantity - 1)}
-                                >
-                                    -
-                                </button>
-                                <input
-                                    type="number"
-                                    className="form-control d-inline-block mx-2"
-                                    value={item.quantity}
-                                    min="1"
-                                    max="999"
-                                    onChange={(e) => handleChangeQuantity(item.id, parseInt(e.target.value) || 0)}
-                                    style={{ width: '60px' }}
-                                />
-                                <button 
-                                    onClick={() => handleChangeQuantity(item.id, item.quantity + 1)}
-                                >
-                                    +
-                                </button>
+                                <div className="ms-auto d-flex align-items-center">
+                                    <button 
+                                        className="btn btn-danger fw-bold d-flex align-items-center justify-content-center"
+                                        style={{ height: '2em', width: '2em' }}
+                                        onClick={() => handleChangeQuantity(item.id, item.quantity - 1)}
+                                    >
+                                        -
+                                    </button>
+                                    <input
+                                        type="number"
+                                        className="form-control d-inline-block ms-2"
+                                        value={item.quantity}
+                                        min="1"
+                                        max="999"
+                                        onChange={(e) => handleChangeQuantity(item.id, parseInt(e.target.value) || 0)}
+                                        style={{ width: '50px' }}
+                                    />
+                                    <button
+                                        className="btn btn-success fw-bold d-flex align-items-center justify-content-center"
+                                        style={{ height: '2em', width: '2em' }}
+                                        onClick={() => handleChangeQuantity(item.id, item.quantity + 1)}
+                                    >
+                                        +
+                                    </button>
+                                </div>
                             </li>
                         ))}
                     </ul>
