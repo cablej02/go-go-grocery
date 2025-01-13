@@ -1,6 +1,5 @@
 .search-input {
     color: var(--bs-body-bg) !important;
-    max-width: 220px;
 }
 
 .search-input::placeholder {

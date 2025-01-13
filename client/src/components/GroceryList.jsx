@@ -3,7 +3,7 @@ import { retrieveGroceryListItems, createGroceryList } from "../api/groceryListA
 import { retrieveAllProducts } from "../api/productsAPI.jsx";
 import GroceryListSelector from "./GroceryListSelector.jsx";
 import GroceryItems from "./GroceryItems.jsx";
-import AvailableProducts from "./AvailableProducts.jsx";
+import ProductSearch from "./ProductSearch.jsx";
 
 const GroceryList = ({ lists, setLists }) => {
     const [selectedList, setSelectedList] = useState(null);
@@ -98,9 +98,9 @@ const GroceryList = ({ lists, setLists }) => {
 
             {/* Available Products */}
             <div className="available-products flex-grow-1">
-                <AvailableProducts
-                    products={availableProducts}
-                    setProducts={setProducts}
+                <ProductSearch
+                    availableProducts={availableProducts}
+                    setAvailableProducts={setProducts}
                     selectedList={selectedList}
                     listItems={listItems}
                     setListItems={setListItems}

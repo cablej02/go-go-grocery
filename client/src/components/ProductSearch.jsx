@@ -3,9 +3,9 @@ import { createGroceryListItem } from '../api/groceryListAPI.jsx';
 import { retrieveAllCategories } from '../api/categoryAPI.jsx';
 import { createProduct } from '../api/productsAPI.jsx';
 
-import '../styles/availableProductsStyles.css';
+import '../styles/productSearchStyles.css';
 
-const AvailableProducts = ({ products, setProducts, selectedList, listItems, setListItems }) => {
+const ProductSearch = ({ availableProducts, setAvailableProducts, selectedList, listItems, setListItems }) => {
     const [searchInput, setSearchInput] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [newProduct, setNewProduct] = useState({ name: '', category_id: null });
@@ -20,7 +20,7 @@ const AvailableProducts = ({ products, setProducts, selectedList, listItems, set
         setSearchInput(e.target.value.toLowerCase());
     }
 
-    const filteredProducts = products.filter((product) => {
+    const filteredProducts = availableProducts.filter((product) => {
         return product.name.toLowerCase().includes(searchInput);
     });
 
@@ -45,8 +45,8 @@ const AvailableProducts = ({ products, setProducts, selectedList, listItems, set
             console.log("Adding New Product:", newProduct);
             setShowModal(false);
             const data = await createProduct(newProduct);
-            console.log(products, data)
-            setProducts([...products, data]);
+            console.log(availableProducts, data)
+            setAvailableProducts([...availableProducts, data]);
             setNewProduct({ name: '', category_id: null });
         }
     }
@@ -62,29 +62,46 @@ const AvailableProducts = ({ products, setProducts, selectedList, listItems, set
 
     return (
         <div className="d-flex flex-column justify-content-center mx-auto">
-            <h3>Products</h3>
-            <div className='d-flex justify-content-center mx-auto gap-3'>
-                
-                {/* Search Input */}
-                <input
-                    type="text"
-                    placeholder="Search Products..."
-                    value={searchInput}
-                    onChange={handleSearchChange}
-                    className="search-input form-control mb-3 bg-light mx-auto"
-                    style={{ width: '300px' }}
-                />
-                <button className="btn btn-success " onClick={() => setShowModal(true)}>+</button>
+            <div className="d-flex justify-content-center mx-auto gap-2">
+                <div className="position-relative" style={{ width: '300px' }}>
+                    {/* Search Input */}
+                    <input
+                        type="text"
+                        placeholder="Search Products..."
+                        value={searchInput}
+                        onChange={handleSearchChange}
+                        className="form-control search-input mb-0 bg-light"
+                    />
+
+                    {/* Search Results Dropdown */}
+                    {searchInput && (
+                        <ul className="list-group position-absolute bg-light shadow rounded w-100">
+                            {filteredProducts.slice(0, 5).map((product) => (
+                                <li
+                                    key={product.id}
+                                    className="list-group-item d-flex justify-content-between align-items-center bg-light text-dark"
+                                >
+                                    <span>{product.name}</span>
+                                    <button
+                                        onClick={() => handleAddListItem(selectedList, product.id)}
+                                        className="btn btn-sm btn-success"
+                                    >
+                                        Add
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+                {/* Add New Product Button */}
+                <button
+                    className="btn btn-success mb-3"
+                    style={{ height: 'calc(2.3rem)' }}
+                    onClick={() => setShowModal(true)}
+                >
+                    +
+                </button>
             </div>
-            {/* List of Available Products */}
-            <ul className="list-group mx-auto">
-                {filteredProducts .map((product) => (
-                    <li key={product.id} className="list-group-item gap-5">
-                        <button onClick={() => handleAddListItem(selectedList, product.id)}>Add</button>
-                        <span>{product.name}</span>
-                    </li>
-                ))}
-            </ul>
 
             {/* new product modal */}
             {showModal && (
@@ -139,4 +156,4 @@ const AvailableProducts = ({ products, setProducts, selectedList, listItems, set
     )
 };
 
-export default AvailableProducts;
+export default ProductSearch;
