@@ -76,10 +76,10 @@ const GroceryList = ({ lists, setLists }) => {
     }
 
     return (
-        <div className="d-flex mt-5 gap-5">
-            <div>
+        <div className="d-flex flex-column gap-5">
+            <div className="d-flex justify-content-between gap-3">
                 {/* Grocery List Selector - Dropdown */}
-                <div className="list-selector mx-3 mb-3">
+                <div className="list-selector">
                     <GroceryListSelector
                         lists={lists}
                         selectedList={selectedList}
@@ -87,25 +87,26 @@ const GroceryList = ({ lists, setLists }) => {
                         onCreateList={onCreateList}
                     />
                 </div>
+
                 
-                {/* Grocery List Items */}
-                <div className="grocery-items flex-grow-1">
+                {/* Product Search */}
+                <div className="available-products">
+                    <ProductSearch
+                        availableProducts={availableProducts}
+                        setAvailableProducts={setProducts}
+                        selectedList={selectedList}
+                        listItems={listItems}
+                        setListItems={setListItems}
+                    />
+                </div>
+            </div>
+
+            {/* Grocery List Items */}
+            <div className="grocery-items flex-grow-1">
                     <GroceryItems
                         listItems={listItems}
                         setListItems={setListItems} />
                 </div>
-            </div>
-
-            {/* Available Products */}
-            <div className="available-products flex-grow-1">
-                <ProductSearch
-                    availableProducts={availableProducts}
-                    setAvailableProducts={setProducts}
-                    selectedList={selectedList}
-                    listItems={listItems}
-                    setListItems={setListItems}
-                />
-            </div>
         </div>
     )
 }

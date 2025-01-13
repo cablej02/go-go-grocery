@@ -13,10 +13,10 @@ const ListSelector = ({ lists, selectedList, onChangeList, onCreateList }) => {
     }
 
     return (
-        <div className="d-flex gap-2" style={{ width: '200px' }}>
+        <div className="d-flex gap-2 align-items-center">
             <button
-                className="btn btn-success"
-                style={{ height: 'calc(2.3rem)' }}
+                className="btn btn-primary border-0"
+                style={{ height: 'calc(2.2rem)', backgroundColor: `var(--bs-primary)` }}
                 onClick={()=> setShowModal(true)}
             >
                 +
@@ -25,7 +25,7 @@ const ListSelector = ({ lists, selectedList, onChangeList, onCreateList }) => {
                 id="list-select"
                 value={selectedList || ""}
                 onChange={onChangeList}
-                className="form-select"
+                className="form-select border-2 border-primary"
             >
                 <option value="" disabled>
                     Select a List

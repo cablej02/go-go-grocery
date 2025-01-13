@@ -74,22 +74,26 @@ const ProductSearch = ({ availableProducts, setAvailableProducts, selectedList, 
     }
 
     return (
-        <div className="d-flex flex-column justify-content-center mx-auto">
+        <div className="d-flex flex-column mx-auto">
             {selectedList && (
-            <div className="d-flex justify-content-center mx-auto gap-2">
-                <div className="position-relative" style={{ width: '300px' }}>
+            <div className="d-flex mx-auto gap-2">
+                <div className="position-relative">
                     {/* Search Input */}
                     <input
                         type="text"
                         placeholder="Search Products..."
                         value={searchInput}
                         onChange={handleSearchChange}
-                        className="form-control search-input mb-0 bg-light"
+                        className="form-control search-input bg-light"
+                        style={{ width: '15rem' }}
                     />
 
                     {/* Search Results Dropdown */}
                     {searchInput && (
-                        <ul className="list-group position-absolute bg-light shadow rounded w-100">
+                        <ul
+                            className="list-group position-absolute bg-light shadow rounded w-100"
+                            style={{ zIndex: 100 }}
+                        >
                             {filteredProducts.map((product) => (
                                 <li
                                     key={product.id}
@@ -109,8 +113,8 @@ const ProductSearch = ({ availableProducts, setAvailableProducts, selectedList, 
                 </div>
                 {/* Add New Product Button */}
                 <button
-                    className="btn btn-success mb-3"
-                    style={{ height: 'calc(2.3rem)' }}
+                    className="btn btn-success border-0"
+                    style={{ height: 'calc(2.2rem)', backgroundColor: `var(--bs-primary)`, marginTop: '0.1rem' }}   
                     onClick={() => setShowModal(true)}
                 >
                     +
