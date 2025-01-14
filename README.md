@@ -10,23 +10,23 @@ The motivation behind this project was to create a interactable grocery list man
 
 First, create a user and log in.
 
-![Login image](./assets/login.png)
+![Login image](./assets/login.PNG)
 
 Start a new list by pressing the orange plus button on the left of the dropdown.
 
-![Create List](./assets/selectList.png)
+![Create List](./assets/selectList.PNG)
 
 Add products to the list by searching for them in the search bar.
 
-![Search bar](./assets/searchProducts.png)
+![Search bar](./assets/searchProducts.PNG)
 
 Create a new product if what you're looking for doesn't exist.
 
-![Create Product](./assets/addProducts.png)
+![Create Product](./assets/addProducts.PNG)
 
 Change the quantity of each product by interacting with the plus and minus buttons, or inputing a new value.
 
-![Grocery List](./assets/adjustQuantity.png)
+![Grocery List](./assets/adjustQuantity.PNG)
 
 ## Future Development
 
